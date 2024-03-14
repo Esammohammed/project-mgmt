@@ -47,7 +47,7 @@ export default function ProjectInfo({ projects, setProjects, selectedProject }) 
             });
             
 }
-    console.log(selectedProject);
+ 
     return (
 
         <Section>   
