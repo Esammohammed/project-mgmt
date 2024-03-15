@@ -5,12 +5,13 @@ import ProjectBrief from "./ProjectBrief";
 const Section = styled.section`
     background-color: #1C1D1F;
     padding: 2rem;
-    width: 25%;
-    height: 90%;
+    width: 15%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     border-radius: 20px;
     margin-right: 2rem;
+    ;
 
     h2 {
         color: #d2d2d2;
@@ -40,12 +41,14 @@ export default function SidePanel({ setSelectedProject, projects}) {
     
 
 
- 
+    function unsetSelectedProject(){
+        setSelectedProject(null )
+    }
 
     return (
         <Section>
             <h2>Your Projects</h2>
-            <button >New Project</button>
+            <button onClick={unsetSelectedProject} >New Project</button>
             {projects.map((project) => (
                 <ProjectBrief
                     key={project.id}
