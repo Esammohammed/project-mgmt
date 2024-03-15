@@ -1,3 +1,5 @@
+// NewProject.js
+import { useRef } from "react";
 import styled from "styled-components";
 
 const Section = styled.section`
@@ -11,9 +13,6 @@ const Section = styled.section`
     margin-bottom: 30px;
     justify-content: center;
     border-radius: 20px;
-    /* 
-    add shadow border  
-    */
     
     h3 {
         margin-bottom: 1rem;
@@ -35,16 +34,36 @@ const Section = styled.section`
     }
 `;
 
-export default function NewProject({ project }) {
+export default function NewProject({ addNewProject }) {
+    const projectName = useRef();
+    const projectDescription = useRef();
+    const projectDate = useRef();
+
+    function addProject () {
+        if (!projectName.current.value || !projectDescription.current.value || !projectDate.current.value) {
+            alert("Please fill out all fields");
+            return;
+        }
+        const newProject = {
+            id: Date.now(), // Assign a unique ID, for example using Date.now()
+            name: projectName.current.value,
+            description: projectDescription.current.value,
+            projectDate: projectDate.current.value,
+            tasks: []
+        };
+        addNewProject(newProject);
+    };
+ 
+
     return (
         <Section>
             <h3>Project Name</h3>
-            <input type="text" />
+            <input type="text" ref={projectName} required />
             <h3>Project Description</h3>
-            <textarea></textarea>
+            <textarea ref={projectDescription} required  ></textarea>
             <h3>Project Date</h3>
-            <input type="date" />
-            <button>Save Project</button>
+            <input type="date" ref={projectDate} required  />
+            <button onClick={addProject}>Save Project</button>
         </Section>
     );
 }
