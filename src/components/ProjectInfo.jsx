@@ -1,10 +1,11 @@
 import { useRef } from "react";
 import styled from "styled-components";
+import Task from "./Task";
 const Section = styled.section`
     background-color: #f3f4f6;
     padding: 1rem;
-    width: 100%;
-    height: 50%;
+    width: 60%;
+    height: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -34,41 +35,53 @@ const Section = styled.section`
         font-size: 1rem;
     }
 `;
-export default function ProjectInfo({ projects, setProjects, selectedProject }) {
+export default function ProjectInfo({ setProjects, selectedProject,deleteProject }) {
     const newTask = useRef(null);
     function addTask() {
-        console.log(newTask.current.value);    
+        console.log(newTask.current.value);
         setProjects((prevProjects) => {
-                
-                const updatedProjects = [...prevProjects];
-                const projectIndex = updatedProjects.findIndex(project => project.id === selectedProject.id);
-                updatedProjects[projectIndex].tasks.push(newTask.current.value);
-                return updatedProjects;
-            });
             
-}
- 
+            const updatedProjects = [...prevProjects];
+            const projectIndex = updatedProjects.findIndex(project => project.id === selectedProject.id);
+            updatedProjects[projectIndex].tasks.push(newTask.current.value);
+            return updatedProjects;
+        });
+    }
+    function deleteTask(index) {
+        setProjects((prevProjects) => {
+
+            const updatedProjects = [...prevProjects];
+            const projectIndex = updatedProjects.findIndex(project => project.id === selectedProject.id);
+            updatedProjects[projectIndex].tasks.splice(index, 1);
+            console.log(updatedProjects);
+            return updatedProjects;
+
+        })
+    }
+
+
+
+
     return (
 
-        <Section>   
-            <h2>{selectedProject.name}</h2>
+        <Section>
+            <div>
+                <h2>{selectedProject.name}</h2>
+                <button onClick={()=>deleteProject(selectedProject)}>Delete Project</button>
+            </div>
             <h3>{selectedProject.description}</h3>
             <h2>Tasks</h2>
-            {/* 
-            Add a new task 
-            */}
-        
+
             <Section>
                 <h3>Task Description</h3>
-                <textarea ref= {newTask} ></textarea>
+                <textarea ref={newTask} ></textarea>
                 <button onClick={addTask}>Add Task</button>
             </Section>
 
-         
-            {selectedProject.tasks.map((task,index) => (
-                <div key= {index}>
-                    <h3>{task}</h3>
-                </div>
+
+            {selectedProject.tasks.map((task, index) => (
+                <Task key={index} task={task} index={index} deleteTask={deleteTask} />
+
             ))}
 
         </Section>
