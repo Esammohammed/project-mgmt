@@ -4,7 +4,7 @@ import Task from "./Task";
 const Section = styled.section`
     background-color: #f3f4f6;
     padding: 1rem;
-    width: 60%;
+    width: 70%;
     height: 100%;
     margin: 0 auto;
     display: flex;
